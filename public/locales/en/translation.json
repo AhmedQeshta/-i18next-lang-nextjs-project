@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "title": "Next.js i18n App",
+    "description": "A Next.js application with internationalization support"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "common": {
+    "welcome": "Welcome",
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic",
+    "french": "French",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit"
+  },
+  "home": {
+    "title": "Welcome to Next.js with i18n",
+    "subtitle": "This is a multilingual application built with Next.js 15 and i18next",
+    "description": "Experience seamless internationalization with server-side rendering support.",
+    "features": {
+      "title": "Features",
+      "ssr": "Server-side rendering support",
+      "clientComponents": "Client component support",
+      "autoDetection": "Automatic language detection",
+      "staticContent": "Static content translation"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "content": "This is the about page content in English."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "content": "Get in touch with us through this contact page."
+  }
+}

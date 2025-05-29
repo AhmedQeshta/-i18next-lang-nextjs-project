@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "title": "Application Next.js i18n",
+    "description": "Une application Next.js avec support de l'internationalisation"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "common": {
+    "welcome": "Bienvenue",
+    "language": "Langue",
+    "english": "Anglais",
+    "arabic": "Arabe",
+    "french": "Français",
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "submit": "Soumettre"
+  },
+  "home": {
+    "title": "Bienvenue dans Next.js avec i18n",
+    "subtitle": "Ceci est une application multilingue construite avec Next.js 15 et i18next",
+    "description": "Découvrez l'internationalisation transparente avec le support du rendu côté serveur.",
+    "features": {
+      "title": "Fonctionnalités",
+      "ssr": "Support du rendu côté serveur",
+      "clientComponents": "Support des composants client",
+      "autoDetection": "Détection automatique de la langue",
+      "staticContent": "Traduction du contenu statique"
+    }
+  },
+  "about": {
+    "title": "À propos de nous",
+    "content": "Ceci est le contenu de la page à propos en français."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "content": "Entrez en contact avec nous via cette page de contact."
+  }
+}
