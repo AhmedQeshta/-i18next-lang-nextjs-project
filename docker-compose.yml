@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # Development service
+  nextjs-dev:
+    build:
+      context: .
+      target: deps
+    command: npm run dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+    profiles:
+      - dev
+
+  # Production service
+  nextjs-prod:
+    build:
+      context: .
+      target: runner
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+    profiles:
+      - prod
+
+  # Standalone development with hot reload
+  nextjs-standalone:
+    image: node:18-alpine
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    profiles:
+      - standalone

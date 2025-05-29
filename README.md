@@ -14,8 +14,11 @@ A complete internationalization (i18n) setup for Next.js 15 using i18next and re
 - ✅ **Language switcher** component
 - ✅ **SEO-friendly** URLs
 - ✅ **Multi-language support** (English, Arabic, French)
+- ✅ **Docker support** for containerized deployment
 
 ## 🚀 Quick Start
+
+### Local Development
 
 1. **Install dependencies:**
 
@@ -33,6 +36,62 @@ A complete internationalization (i18n) setup for Next.js 15 using i18next and re
    - English: http://localhost:3000/en
    - Arabic: http://localhost:3000/ar
    - French: http://localhost:3000/fr
+
+### 🐳 Docker Development
+
+1. **Run with Docker Compose (Development):**
+
+   ```bash
+   # Using profiles
+   docker-compose --profile dev up
+
+   # Or using dedicated dev compose file
+   docker-compose -f docker-compose.dev.yml up
+
+   # Build and run in background
+   docker-compose -f docker-compose.dev.yml up -d --build
+   ```
+
+2. **Run standalone development:**
+
+   ```bash
+   docker-compose --profile standalone up
+   ```
+
+3. **Access the application:**
+   - English: http://localhost:3000/en
+   - Arabic: http://localhost:3000/ar
+   - French: http://localhost:3000/fr
+
+### 🐳 Docker Production
+
+1. **Build and run production container:**
+
+   ```bash
+   # Using Docker Compose
+   docker-compose --profile prod up --build
+
+   # Or build Docker image directly
+   docker build -t nextjs-i18n .
+   docker run -p 3000:3000 nextjs-i18n
+   ```
+
+2. **Using Docker commands:**
+
+   ```bash
+   # Build the image
+   docker build -t nextjs-i18n-app .
+
+   # Run the container
+   docker run -d -p 3000:3000 --name nextjs-i18n nextjs-i18n-app
+
+   # View logs
+   docker logs nextjs-i18n
+
+   # Stop and remove
+   docker stop nextjs-i18n
+   docker rm nextjs-i18n
+   ```
 
 ## 📁 Project Structure
 
@@ -65,6 +124,10 @@ A complete internationalization (i18n) setup for Next.js 15 using i18next and re
 │           └── translation.json # French translations
 ├── types/
 │   └── i18next.d.ts            # TypeScript declarations
+├── Dockerfile                  # Docker configuration
+├── docker-compose.yml          # Docker Compose configuration
+├── docker-compose.dev.yml      # Development Docker Compose
+├── .dockerignore              # Docker ignore file
 └── middleware.ts               # Locale detection middleware
 ```
 
@@ -233,7 +296,6 @@ CSS classes with RTL support:
 .space-x-4/* Normal spacing */
 .rtl: space-x-reverse;
 .rtl
-.rtl
 .rtl/* RTL spacing */;
 ```
 
@@ -244,6 +306,61 @@ CSS classes with RTL support:
 - **SEO-friendly URLs**: `/en/about`, `/ar/about`, `/fr/about`
 - **Translated metadata**: Title and description in each language
 - **Static generation**: Pages can be statically generated for each locale
+
+## 🐳 Docker Configuration
+
+### Development
+
+The development setup includes:
+
+- Hot reload support
+- Volume mounting for real-time code changes
+- Development optimizations
+- Debug capabilities
+
+```bash
+# Development with hot reload
+docker-compose -f docker-compose.dev.yml up
+
+# View logs
+docker-compose -f docker-compose.dev.yml logs -f
+```
+
+### Production
+
+The production setup includes:
+
+- Multi-stage build optimization
+- Minimal image size using Alpine Linux
+- Security best practices
+- Standalone Next.js output
+
+```bash
+# Production build and run
+docker-compose --profile prod up --build
+
+# Scale the application
+docker-compose --profile prod up --scale nextjs-prod=3
+```
+
+### Docker Commands
+
+```bash
+# Build development image
+docker build --target deps -t nextjs-i18n:dev .
+
+# Build production image
+docker build --target runner -t nextjs-i18n:prod .
+
+# Run with environment variables
+docker run -p 3000:3000 -e NODE_ENV=production nextjs-i18n:prod
+
+# Inspect the image
+docker inspect nextjs-i18n:prod
+
+# Remove all related containers and images
+docker-compose down --rmi all
+```
 
 ## 🛠️ Development
 
@@ -278,6 +395,32 @@ declare module 'i18next' {
 
 ## 🚀 Production Deployment
 
+### Local Production Build
+
+```bash
+npm run build
+npm start
+```
+
+### Docker Production Deployment
+
+```bash
+# Build and deploy with Docker
+docker build -t nextjs-i18n .
+docker run -d -p 3000:3000 --name nextjs-i18n-prod nextjs-i18n
+
+# Or use Docker Compose
+docker-compose --profile prod up -d --build
+```
+
+### Container Orchestration
+
+For production deployments, consider using:
+
+- **Kubernetes** for container orchestration
+- **Docker Swarm** for simpler clustering
+- **Cloud services** like AWS ECS, Google Cloud Run, or Azure Container Instances
+
 The application is production-ready with:
 
 - Static generation support
@@ -285,13 +428,8 @@ The application is production-ready with:
 - Server-side rendering
 - SEO optimization
 - Performance optimizations
-
-Build the application:
-
-```bash
-npm run build
-npm start
-```
+- Docker containerization
+- Security best practices
 
 ## 📝 License
 
