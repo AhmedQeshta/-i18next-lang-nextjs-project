@@ -7,12 +7,13 @@ A complete internationalization (i18n) setup for Next.js 15 using i18next and re
 - ✅ **Server-side rendering** with i18next
 - ✅ **Client-side hydration** with react-i18next
 - ✅ **Automatic language detection** from browser
-- ✅ **URL-based routing** (`/en/`, `/ar/`)
+- ✅ **URL-based routing** (`/en/`, `/ar/`, `/fr/`)
 - ✅ **Metadata translation** (title, description)
 - ✅ **RTL support** for Arabic
 - ✅ **TypeScript support** with type safety
 - ✅ **Language switcher** component
 - ✅ **SEO-friendly** URLs
+- ✅ **Multi-language support** (English, Arabic, French)
 
 ## 🚀 Quick Start
 
@@ -31,6 +32,7 @@ A complete internationalization (i18n) setup for Next.js 15 using i18next and re
 3. **Open your browser:**
    - English: http://localhost:3000/en
    - Arabic: http://localhost:3000/ar
+   - French: http://localhost:3000/fr
 
 ## 📁 Project Structure
 
@@ -51,13 +53,16 @@ A complete internationalization (i18n) setup for Next.js 15 using i18next and re
 │   └── ClientComponent.tsx     # Example client component
 ├── lib/
 │   ├── i18n.ts                 # Client-side i18n config
-│   └── i18n-server.ts          # Server-side i18n utilities
+│   ├── i18n-server.ts          # Server-side i18n utilities
+│   └── constants.ts            # Language constants
 ├── public/
 │   └── locales/
 │       ├── en/
 │       │   └── translation.json # English translations
-│       └── ar/
-│           └── translation.json # Arabic translations
+│       ├── ar/
+│       │   └── translation.json # Arabic translations
+│       └── fr/
+│           └── translation.json # French translations
 ├── types/
 │   └── i18next.d.ts            # TypeScript declarations
 └── middleware.ts               # Locale detection middleware
@@ -67,28 +72,31 @@ A complete internationalization (i18n) setup for Next.js 15 using i18next and re
 
 ### Supported Languages
 
-Currently configured languages (can be modified in `lib/i18n.ts`):
+Currently configured languages (can be modified in `lib/constants.ts`):
 
 - English (`en`) - Default
 - Arabic (`ar`)
+- French (`fr`)
 
 ### Adding New Languages
 
 1. **Add locale to configuration:**
 
    ```typescript
-   // lib/i18n.ts
-   export const languages = ['en', 'ar', 'fr']; // Add 'fr' for French
+   // lib/constants.ts
+   export const languages = ['en', 'ar', 'fr', 'es']; // Add 'es' for Spanish
    ```
 
 2. **Create translation file:**
 
    ```bash
-   mkdir public/locales/fr
-   cp public/locales/en/translation.json public/locales/fr/translation.json
+   mkdir public/locales/es
+   cp public/locales/en/translation.json public/locales/es/translation.json
    ```
 
 3. **Translate the content** in the new JSON file.
+
+4. **Update LanguageSwitcher component** to include the new language option.
 
 ### Translation Files
 
@@ -106,7 +114,10 @@ Translation files are located in `public/locales/{locale}/translation.json`:
   },
   "common": {
     "welcome": "Welcome",
-    "language": "Language"
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic",
+    "french": "French"
   }
 }
 ```
@@ -165,7 +176,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 ### Language Switcher
 
-The `LanguageSwitcher` component automatically detects the current locale and provides buttons to switch languages:
+The `LanguageSwitcher` component automatically detects the current locale and provides buttons to switch between all supported languages:
 
 ```typescript
 import LanguageSwitcher from '../components/LanguageSwitcher';
@@ -189,14 +200,16 @@ The application uses Next.js 15 App Router with dynamic segments:
 - `/` → Redirects to `/en` (default locale)
 - `/en` → English home page
 - `/ar` → Arabic home page
+- `/fr` → French home page
 - `/en/about` → English about page
 - `/ar/about` → Arabic about page
+- `/fr/about` → French about page
 
 ### Automatic Language Detection
 
 The middleware automatically detects the user's preferred language from:
 
-1. URL path (`/en/`, `/ar/`)
+1. URL path (`/en/`, `/ar/`, `/fr/`)
 2. `Accept-Language` header
 3. Falls back to default language (`en`)
 
@@ -219,14 +232,16 @@ CSS classes with RTL support:
 ```css
 .space-x-4/* Normal spacing */
 .rtl: space-x-reverse;
+.rtl
+.rtl
 .rtl/* RTL spacing */;
 ```
 
 ## 🔍 SEO Benefits
 
 - **Server-side rendering**: Content is translated on the server
-- **Proper HTML lang attribute**: `<html lang="en">` or `<html lang="ar">`
-- **SEO-friendly URLs**: `/en/about`, `/ar/about`
+- **Proper HTML lang attribute**: `<html lang="en">`, `<html lang="ar">`, or `<html lang="fr">`
+- **SEO-friendly URLs**: `/en/about`, `/ar/about`, `/fr/about`
 - **Translated metadata**: Title and description in each language
 - **Static generation**: Pages can be statically generated for each locale
 
@@ -248,8 +263,8 @@ declare module 'i18next' {
 
 ### Adding New Translation Keys
 
-1. Add the key to both translation files
-2. Update the `Resources` interface in `lib/i18n.ts`
+1. Add the key to all translation files (`en`, `ar`, `fr`)
+2. Update the `Resources` interface in `types/i18next.d.ts`
 3. Use the new key in your components
 
 ## 📦 Dependencies
